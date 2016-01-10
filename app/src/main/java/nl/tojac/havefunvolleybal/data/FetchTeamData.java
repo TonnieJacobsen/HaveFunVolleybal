@@ -19,14 +19,11 @@ public class FetchTeamData {
    ContentResolver mResolver;
 
    public FetchTeamData(final Context context, String competitioId){
-    mResolver = context.getContentResolver();
-
-
-
+       mResolver = context.getContentResolver();
        mResolver.delete(CompetitieContract.TeamEntry.CONTENT_URI, null, null);
-       Log.v("Tojac", "Ik heb het teambestand leeg gekieperd  ");
 
-       String query = Queries.selectAll;
+
+       String query = Queries.selectTeams;
 //    matches.clear();
        new DownloadWebpageTask(new AsyncResult() {
            @Override
@@ -62,10 +59,9 @@ public class FetchTeamData {
 
 
 
+                    // Voorlopig even gevuld met fakedata
 
                     teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_LEADER_ID, 10);
-
-
                     teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_PICTURE_ID, R.mipmap.ic_launcher);
 
 
@@ -247,20 +243,6 @@ public class FetchTeamData {
         }
     }
 
-    public void insertTeamInDB(Team team) {
-        Log.v("Tojac", "Ik ga toevoegen :  " +  team.getTeamNaam());
-        ContentValues teamValues = new ContentValues();
-        teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_LEADER_ID, 10);
-        teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_EXT_TEAM_ID, team.getTeamSheetID().trim());
-        teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_LEADER_NAME, team.getTeamLeider());
-        teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_NAME, team.getTeamNaam());
-        teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_PICTURE_ID, R.mipmap.ic_launcher);
-        teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_POULE,team.getPoule());
-        Log.v("Tojac", "Toegevoegd :  " +  team.getTeamNaam());
-
-        mResolver.insert(CompetitieContract.TeamEntry.CONTENT_URI, teamValues);
-
-    }
 
 
 }
