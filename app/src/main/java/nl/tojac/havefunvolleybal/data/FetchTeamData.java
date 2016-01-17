@@ -17,30 +17,67 @@ import nl.tojac.havefunvolleybal.R;
 public class FetchTeamData {
 
    ContentResolver mResolver;
+   Context mContext;
+   int mLog;
 
-   public FetchTeamData(final Context context, String competitioId){
-       mResolver = context.getContentResolver();
-       mResolver.delete(CompetitieContract.TeamEntry.CONTENT_URI, null, null);
+    public static final int LOG_ON = 1;
+    public static final int LOG_OFF = 0;
 
 
-       String query = Queries.selectTeams;
-//    matches.clear();
-       new DownloadWebpageTask(new AsyncResult() {
-           @Override
-           public void onResult(JSONObject object) {
-               processTeamJson(object, context);
-           }
-       }).execute(query);
+    public static final String TEAM_TABEL_NAME = CompetitieContract.TeamEntry.TABLE_NAME;
+
+   public FetchTeamData( Context context){
+       mContext = context;
+       mResolver = mContext.getContentResolver();
+       mLog = LOG_ON;
+
+
 
 
    }
 
 
+    public void GetTeamDataFromExternalSheet(String query){
+
+        new DownloadWebpageTask(new AsyncResult() {
+           @Override
+           public void onResult(JSONObject object) {
+               processTeamJson(object, mContext);
+           }
+       }).execute(query);
+
+    }
+
+
+
+
+    public int RemoveTeamData(String competitionID){
+
+       String[] mSelectionArgs = {competitionID};
+
+       String mSelection = CompetitieContract.TeamEntry.COL_TEAM_COMPETITION_ID + " = ? ";
+
+        int rowsDeleted = mResolver.delete(CompetitieContract.TeamEntry.CONTENT_URI,mSelection , mSelectionArgs);
+
+        return rowsDeleted;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
     public void processTeamJson(JSONObject object, Context context) {
 
 
-
-
+        int colNumber;
+        String colInDb;
         try {
             JSONArray rows = object.getJSONArray("rows");
 
@@ -65,167 +102,330 @@ public class FetchTeamData {
                     teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_PICTURE_ID, R.mipmap.ic_launcher);
 
 
-                    if (!columns.isNull(0)) {
-                        if (!columns.getJSONObject(0).isNull("v")) {
-                            teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_NAME, columns.getJSONObject(0).getString("v"));
-                        }
-                    }
-                    if (!columns.isNull(1)) {
-                        if (!columns.getJSONObject(1).isNull("v")) {
-                            teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_EXT_TEAM_ID, columns.getJSONObject(1).getString("v"));
-                        }
-                    }
 
+                    colNumber = 0;
+                    colInDb = CompetitieContract.TeamEntry.COL_TEAM_NAME;
 
-                    if (!columns.isNull(2)) {
-                        if (!columns.getJSONObject(2).isNull("v")) {
-                            teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_LEADER_NAME, columns.getJSONObject(2).getString("v"));
-
-                        }
-                    }
-
-                    if (!columns.isNull(3)) {
-                        if (!columns.getJSONObject(3).isNull("v")) {
-                            teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_POULE, columns.getJSONObject(3).getString("v"));
-
-                        }
-                    }
-
-
-                    if (!columns.isNull(4)) {
-                        if (!columns.getJSONObject(4).isNull("v")) {
-                            teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_COMPETITION_ID, columns.getJSONObject(4).getString("v"));
-
-                        }
-                    }
-
-
-
-                    // Teamlid 1 ophalen indien aanwezig
-                    if (!columns.isNull(5)) {
-                        if (!columns.getJSONObject(5).isNull("v")) {
-
-                            teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_1, columns.getJSONObject(5).getString("v"));
-
+                    if (!columns.isNull(colNumber)) {
+                        if (!columns.getJSONObject(colNumber).isNull("v")) {
+                            teamValues.put(colInDb, columns.getJSONObject(colNumber).getString("v"));
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", columns.getJSONObject(colNumber).getString("v"));
+                            }
                         } else {
-                            teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_1, "");
+                            teamValues.put(colInDb, "");
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", "Extern competition id is niet gevuld");
+                            }
                         }
 
-                    }else {
-                        teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_1, "");
+                    } else {
+                        teamValues.put(colInDb, "");
                     }
 
+                    colNumber++;
+                    colInDb = CompetitieContract.TeamEntry.COL_TEAM_EXT_TEAM_ID;
 
-                    // Teamlid 2 ophalen indien aanwezig
-                    if (!columns.isNull(6)) {
-                        if (!columns.getJSONObject(6).isNull("v")) {
-                            teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_2, columns.getJSONObject(6).getString("v"));
-
+                    if (!columns.isNull(colNumber)) {
+                        if (!columns.getJSONObject(colNumber).isNull("v")) {
+                            teamValues.put(colInDb, columns.getJSONObject(colNumber).getString("v"));
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", columns.getJSONObject(colNumber).getString("v"));
+                            }
                         } else {
-                            teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_2, "");
+                            teamValues.put(colInDb, "");
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", "Extern competition id is niet gevuld");
+                            }
                         }
-                    }else {
-                        teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_2, "");
+
+                    } else {
+                        teamValues.put(colInDb, "");
                     }
 
+                    colNumber++;
+                    colInDb = CompetitieContract.TeamEntry.COL_TEAM_LEADER_NAME;
 
-                    // Teamlid 3 ophalen indien aanwezig
-                    if (!columns.isNull(7)) {
-                        if (!columns.getJSONObject(7).isNull("v")) {
-                            teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_3, columns.getJSONObject(7).getString("v"));
-
+                    if (!columns.isNull(colNumber)) {
+                        if (!columns.getJSONObject(colNumber).isNull("v")) {
+                            teamValues.put(colInDb, columns.getJSONObject(colNumber).getString("v"));
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", columns.getJSONObject(colNumber).getString("v"));
+                            }
                         } else {
-                            teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_3, "");
+                            teamValues.put(colInDb, "");
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", "Extern competition id is niet gevuld");
+                            }
                         }
-                    }else {
-                        teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_3, "");
+
+                    } else {
+                        teamValues.put(colInDb, "");
                     }
 
-                    // Teamlid 4 ophalen indien aanwezig
-                    if (!columns.isNull(8)) {
-                        if (!columns.getJSONObject(8).isNull("v")) {
-                            teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_4, columns.getJSONObject(8).getString("v"));
 
+                    colNumber++;
+                    colInDb = CompetitieContract.TeamEntry.COL_TEAM_POULE;
+
+                    if (!columns.isNull(colNumber)) {
+                        if (!columns.getJSONObject(colNumber).isNull("v")) {
+                            teamValues.put(colInDb, columns.getJSONObject(colNumber).getString("v"));
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", columns.getJSONObject(colNumber).getString("v"));
+                            }
                         } else {
-                            teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_4, "");
+                            teamValues.put(colInDb, "");
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", "Extern competition id is niet gevuld");
+                            }
                         }
-                    }else {
-                        teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_4, "");
-                    }
-                    // Teamlid 5 ophalen indien aanwezig
-                    if (!columns.isNull(9)) {
-                        if (!columns.getJSONObject(9).isNull("v")) {
-                            teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_5, columns.getJSONObject(9).getString("v"));
 
+                    } else {
+                        teamValues.put(colInDb, "");
+                    }
+
+
+
+                    colNumber++;
+                    colInDb = CompetitieContract.TeamEntry.COL_TEAM_COMPETITION_ID;
+
+                    if (!columns.isNull(colNumber)) {
+                        if (!columns.getJSONObject(colNumber).isNull("v")) {
+                            teamValues.put(colInDb, columns.getJSONObject(colNumber).getString("v"));
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", columns.getJSONObject(colNumber).getString("v"));
+                            }
                         } else {
-                            teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_5, "");
+                            teamValues.put(colInDb, "");
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", "Extern competition id is niet gevuld");
+                            }
                         }
-                    }else {
-                        teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_5, "");
-                    }
-                    // Teamlid 6 ophalen indien aanwezig
-                    if (!columns.isNull(10)) {
-                        if (!columns.getJSONObject(10).isNull("v")) {
-                            teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_6, columns.getJSONObject(10).getString("v"));
 
+                    } else {
+                        teamValues.put(colInDb, "");
+                    }
+
+
+
+                    colNumber++;
+
+                    colInDb = CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_1;
+
+                    if (!columns.isNull(colNumber)) {
+                        if (!columns.getJSONObject(colNumber).isNull("v")) {
+                            teamValues.put(colInDb, columns.getJSONObject(colNumber).getString("v"));
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", columns.getJSONObject(colNumber).getString("v"));
+                            }
                         } else {
-                            teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_6, "");
+                            teamValues.put(colInDb, "");
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", "Teamlid 1 is niet gevuld");
+                            }
                         }
-                    }else {
-                        teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_6, "");
-                    }
-                    // Teamlid 7 ophalen indien aanwezig
-                    if (!columns.isNull(11)) {
-                        if (!columns.getJSONObject(11).isNull("v")) {
-                            teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_7, columns.getJSONObject(11).getString("v"));
 
+                    } else {
+                        teamValues.put(colInDb, "");
+                    }
+
+                    colNumber++;
+
+                    colInDb = CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_2;
+
+                    if (!columns.isNull(colNumber)) {
+                        if (!columns.getJSONObject(colNumber).isNull("v")) {
+                            teamValues.put(colInDb, columns.getJSONObject(colNumber).getString("v"));
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", columns.getJSONObject(colNumber).getString("v"));
+                            }
                         } else {
-                            teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_7, "");
+                            teamValues.put(colInDb, "");
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", "Teamlid 2 is niet gevuld");
+                            }
                         }
-                    }else {
-                        teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_7, "");
+
+                    } else {
+                        teamValues.put(colInDb, "");
                     }
 
 
-                    // Teamlid 8 ophalen indien aanwezig
-                    if (!columns.isNull(12)) {
-                        if (!columns.getJSONObject(12).isNull("v")) {
-                            teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_8, columns.getJSONObject(12).getString("v"));
+                    colNumber++;
 
+                    colInDb = CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_3;
+
+                    if (!columns.isNull(colNumber)) {
+                        if (!columns.getJSONObject(colNumber).isNull("v")) {
+                            teamValues.put(colInDb, columns.getJSONObject(colNumber).getString("v"));
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", columns.getJSONObject(colNumber).getString("v"));
+                            }
                         } else {
-                            teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_8, "");
+                            teamValues.put(colInDb, "");
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", "Teamlid 3 is niet gevuld");
+                            }
                         }
-                    }else {
-                        teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_8, "");
+
+                    } else {
+                        teamValues.put(colInDb, "");
                     }
 
-                    // Teamlid 9 ophalen indien aanwezig
-                    if (!columns.isNull(13)) {
-                        if (!columns.getJSONObject(13).isNull("v")) {
-                            teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_9, columns.getJSONObject(13).getString("v"));
 
+
+                    colNumber++;
+
+                    colInDb = CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_4;
+
+                    if (!columns.isNull(colNumber)) {
+                        if (!columns.getJSONObject(colNumber).isNull("v")) {
+                            teamValues.put(colInDb, columns.getJSONObject(colNumber).getString("v"));
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", columns.getJSONObject(colNumber).getString("v"));
+                            }
                         } else {
-                            teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_9, "");
+                            teamValues.put(colInDb, "");
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", "Teamlid 4 is niet gevuld");
+                            }
                         }
-                    }else {
-                        teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_9, "");
+
+                    } else {
+                        teamValues.put(colInDb, "");
                     }
 
-                    // Teamlid 10 ophalen indien aanwezig
-                    if (!columns.isNull(14)) {
-                        if (!columns.getJSONObject(14).isNull("v")) {
-                            teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_10, columns.getJSONObject(14).getString("v"));
 
+
+                    colNumber++;
+
+                    colInDb = CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_5;
+
+                    if (!columns.isNull(colNumber)) {
+                        if (!columns.getJSONObject(colNumber).isNull("v")) {
+                            teamValues.put(colInDb, columns.getJSONObject(colNumber).getString("v"));
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", columns.getJSONObject(colNumber).getString("v"));
+                            }
                         } else {
-                            teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_10, "");
+                            teamValues.put(colInDb, "");
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", "Teamlid 5 is niet gevuld");
+                            }
                         }
-                    }else {
-                        teamValues.put(CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_10, "");
+
+                    } else {
+                        teamValues.put(colInDb, "");
                     }
 
 
+                    colNumber++;
+
+                    colInDb = CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_6;
+
+                    if (!columns.isNull(colNumber)) {
+                        if (!columns.getJSONObject(colNumber).isNull("v")) {
+                            teamValues.put(colInDb, columns.getJSONObject(colNumber).getString("v"));
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", columns.getJSONObject(colNumber).getString("v"));
+                            }
+                        } else {
+                            teamValues.put(colInDb, "");
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", "Teamlid 6 is niet gevuld");
+                            }
+                        }
+
+                    } else {
+                        teamValues.put(colInDb, "");
+                    }
 
 
+                    colNumber++;
+
+                    colInDb = CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_7;
+
+                    if (!columns.isNull(colNumber)) {
+                        if (!columns.getJSONObject(colNumber).isNull("v")) {
+                            teamValues.put(colInDb, columns.getJSONObject(colNumber).getString("v"));
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", columns.getJSONObject(colNumber).getString("v"));
+                            }
+                        } else {
+                            teamValues.put(colInDb, "");
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", "Teamlid 7 is niet gevuld");
+                            }
+                        }
+
+                    } else {
+                        teamValues.put(colInDb, "");
+                    }
+
+
+                    colNumber++;
+
+                    colInDb = CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_8;
+
+                    if (!columns.isNull(colNumber)) {
+                        if (!columns.getJSONObject(colNumber).isNull("v")) {
+                            teamValues.put(colInDb, columns.getJSONObject(colNumber).getString("v"));
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", columns.getJSONObject(colNumber).getString("v"));
+                            }
+                        } else {
+                            teamValues.put(colInDb, "");
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", "Teamlid 8 is niet gevuld");
+                            }
+                        }
+
+                    } else {
+                        teamValues.put(colInDb, "");
+                    }
+
+
+                    colNumber++;
+
+                    colInDb = CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_9;
+
+                    if (!columns.isNull(colNumber)) {
+                        if (!columns.getJSONObject(colNumber).isNull("v")) {
+                            teamValues.put(colInDb, columns.getJSONObject(colNumber).getString("v"));
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", columns.getJSONObject(colNumber).getString("v"));
+                            }
+                        } else {
+                            teamValues.put(colInDb, "");
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", "Teamlid 9 is niet gevuld");
+                            }
+                        }
+
+                    } else {
+                        teamValues.put(colInDb, "");
+                    }
+
+                    colNumber++;
+
+                    colInDb = CompetitieContract.TeamEntry.COL_TEAM_TEAMLID_10;
+
+                    if (!columns.isNull(colNumber)) {
+                        if (!columns.getJSONObject(colNumber).isNull("v")) {
+                            teamValues.put(colInDb, columns.getJSONObject(colNumber).getString("v"));
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", columns.getJSONObject(colNumber).getString("v"));
+                            }
+                        } else {
+                            teamValues.put(colInDb, "");
+                            if (mLog == LOG_ON) {
+                                Log.v("To1jac", "Teamlid 10 is niet gevuld");
+                            }
+                        }
+
+                    } else {
+                        teamValues.put(colInDb, "");
+                    }
 
 
                     mResolver.insert(CompetitieContract.TeamEntry.CONTENT_URI, teamValues);

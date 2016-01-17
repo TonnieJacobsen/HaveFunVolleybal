@@ -1,7 +1,6 @@
 package nl.tojac.havefunvolleybal;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -50,7 +49,7 @@ public class Competition_Activity extends AppCompatActivity implements Competiti
     }
 
     @Override
-    public void onItemSelected(Uri contentUri) {
+    public void onItemSelected(int comp_ID) {
 
         boolean mTwoPane = false;
         if (mTwoPane) {
@@ -67,12 +66,13 @@ public class Competition_Activity extends AppCompatActivity implements Competiti
 //                    .replace(R.id.weather_detail_container, fragment, DETAILFRAGMENT_TAG)
 //                    .commit();
         } else {
-            Intent intent = new Intent(this, Games_Activity.class)
-                    .setData(contentUri);
 
+
+            Intent intent = new Intent(this, Games_Activity.class)
+                    .putExtra("COMP_ID", comp_ID);
             startActivity(intent);
 
-//            Toast.makeText(this,contentUri.toString(),Toast.LENGTH_SHORT).show();
+//          Toast.makeText(this, String.valueOf(comp_ID), Toast.LENGTH_SHORT).show();
 
         }
     }

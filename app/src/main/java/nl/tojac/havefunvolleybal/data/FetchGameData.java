@@ -17,40 +17,53 @@ import nl.tojac.havefunvolleybal.Utils;
  */
 public class FetchGameData {
 
+
     ContentResolver mResolver;
+    Context mContext;
+    int mLog;
 
-    public FetchGameData(final Context context, String compititionID){
-       mResolver =  context.getContentResolver();
-
-        // Eerst even de tabelen voor de wedstrijden en de resultaten
-        // leegkieperen.
-
-
-        mResolver.delete(CompetitieContract.GameEntry.CONTENT_URI, null, null);
-        mResolver.delete(CompetitieContract.ResultEntry.CONTENT_URI, null, null);
-
-
-        String query = Queries.selectWedstrijdData;
-
-        new DownloadWebpageTask(new AsyncResult() {
-            @Override
-            public void onResult(JSONObject object) {
-
-                 processWedstrijdJson(object, context);
-            }
-        }).execute(query);
+    public static final int LOG_ON = 1;
+    public static final int LOG_OFF = 0;
 
 
 
-
-
-
-
+    public FetchGameData(final Context context){
+        mContext = context;
+        mResolver = mContext.getContentResolver();
+        mLog = LOG_ON;
 
     }
 
 
-    private void processWedstrijdJson(JSONObject object, Context context) {
+
+    public void GetGameDataFromExternalSheet(String query){
+
+        new DownloadWebpageTask(new AsyncResult() {
+            @Override
+            public void onResult(JSONObject object) {
+                processGameJson(object, mContext);
+            }
+        }).execute(query);
+
+    }
+
+
+
+    public int RemoveGameData(String competitionID){
+
+        String[] mSelectionArgs = {competitionID};
+
+        String mSelection = CompetitieContract.GameEntry.COL_GAME_ID_COMP + " = ? ";
+
+        int rowsDeleted = mResolver.delete(CompetitieContract.GameEntry.CONTENT_URI,mSelection , mSelectionArgs);
+
+        return rowsDeleted;
+    }
+
+
+
+
+    private void processGameJson(JSONObject object, Context context) {
 
 
         String competitieID = "";

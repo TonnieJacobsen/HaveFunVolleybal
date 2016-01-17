@@ -27,7 +27,7 @@ public class CompetitionFragment extends Fragment implements LoaderManager.Loade
     private ListView mListView;
     private int mPosition = ListView.INVALID_POSITION;
     private static final String SELECTED_KEY = "selected_position";
-
+    private Competition mCompetition;
 
 
 
@@ -40,7 +40,9 @@ public class CompetitionFragment extends Fragment implements LoaderManager.Loade
         /**
          * DetailFragmentCallback for when an item has been selected.
          */
-        public void onItemSelected(Uri dateUri);
+        public void onItemSelected(int compId);
+
+
     }
 
 
@@ -70,27 +72,23 @@ public class CompetitionFragment extends Fragment implements LoaderManager.Loade
                 // CursorAdapter returns a cursor at the correct position for getItem(), or null
                 // if it cannot seek to that position.
                 Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
-                if (cursor != null) {
+                if (cursor != null ) {
                     // Onderstaande Callback geeft de geselecteerde team  + _id terug aan
                     // de activity
 
                     ((Callback) getActivity())
-                            .onItemSelected(CompetitieContract.CompetitionEntry.buildCompetitionUri(
-                                    cursor.getLong(
+                            .onItemSelected(cursor.getInt(
                                             cursor.getColumnIndex(
                                                     CompetitieContract.CompetitionEntry._ID)
-                                    )));
+                                    ));
 
                     mPosition = position;
 
-                    Competition comp = new Competition(getActivity(),cursor.getInt(
-                                                cursor.getColumnIndex(
-                                                        CompetitieContract.CompetitionEntry._ID
-                                                )
-                    ));
 
-                    Log.v("To1jac", comp.showTekst());
+                }else {
+                    Log.e("Tojac", "Cursor is leeg in de OnItemClickListener ");
                 }
+                cursor.close();
             }
         });
 

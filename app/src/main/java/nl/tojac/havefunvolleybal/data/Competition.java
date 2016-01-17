@@ -14,20 +14,23 @@ public class Competition {
     private String mCompetitionName, mCompetitionExtID, mCompStatus, mLinkToTeamSheet,mLinkToGameSheet, mLocation;
     private int mNumberOfPoules, mNumberOfFields;
     private long mStartDateInMilli, mEndDateInMilli;
-
+    private Context mContext;
 
     public Competition(Context context, int CompDb_ID) {
-
-        retrieveCompFromDB(context,CompDb_ID);
-    }
-
-    public Competition() {
-
+        mContext = context;
+        retrieveCompFromDB(CompDb_ID);
     }
 
 
-    public void retrieveCompFromDB(Context context, int CompDb_ID) {
-        ContentResolver contentResolver = context.getContentResolver();
+    public Competition(Context context) {
+        mContext = context;
+    }
+
+
+
+    public void retrieveCompFromDB(int CompDb_ID) {
+
+        ContentResolver contentResolver = mContext.getContentResolver();
 
         String[] mSelectionArgs = {String.valueOf(CompDb_ID)};
 
@@ -37,6 +40,8 @@ public class Competition {
                 CompetitieContract.CompetitionEntry._ID + " = ? ",
                 mSelectionArgs,
                 null);
+
+        if (compData != null && compData.moveToFirst()){
 
         this.mCompetitionExtID  = compData.getString(compData.getColumnIndex(CompetitieContract.CompetitionEntry.COL_COMP_EXT_COMP_ID));
         this.mCompStatus        = compData.getString(compData.getColumnIndex(CompetitieContract.CompetitionEntry.COL_COMP_STATUS));
@@ -48,9 +53,34 @@ public class Competition {
         this.mLinkToGameSheet   = compData.getString(compData.getColumnIndex(CompetitieContract.CompetitionEntry.COL_COMP_LINK_TO_GAME_SHEET));
         this.mStartDateInMilli  = compData.getLong(compData.getColumnIndex(CompetitieContract.CompetitionEntry.COL_COMP_START_DATE));
         this.mEndDateInMilli    = compData.getLong(compData.getColumnIndex(CompetitieContract.CompetitionEntry.COL_COMP_END_DATE));
+        }
+
+        compData.close();
     }
 
-
+//    public void retrieveCompFromDB(Context context, String extComp_ID) {
+//        ContentResolver contentResolver = context.getContentResolver();
+//
+//        String[] mSelectionArgs = {String.valueOf(extComp_ID)};
+//
+//        Cursor compData = contentResolver.query(
+//                CompetitieContract.CompetitionEntry.CONTENT_URI,
+//                null,
+//                CompetitieContract.CompetitionEntry.COL_COMP_EXT_COMP_ID + " = ? ",
+//                mSelectionArgs,
+//                null);
+//
+//        this.mCompetitionExtID  = compData.getString(compData.getColumnIndex(CompetitieContract.CompetitionEntry.COL_COMP_EXT_COMP_ID));
+//        this.mCompStatus        = compData.getString(compData.getColumnIndex(CompetitieContract.CompetitionEntry.COL_COMP_STATUS));
+//        this.mCompetitionName   = compData.getString(compData.getColumnIndex(CompetitieContract.CompetitionEntry.COL_COMP_NAME));
+//        this.mLocation          = compData.getString(compData.getColumnIndex(CompetitieContract.CompetitionEntry.COL_COMP_LOCATION));
+//        this.mNumberOfPoules    = compData.getInt(compData.getColumnIndex(CompetitieContract.CompetitionEntry.COL_COMP_NUMBER_OF_POULES));
+//        this.mNumberOfFields    = compData.getInt(compData.getColumnIndex(CompetitieContract.CompetitionEntry.COL_COMP_NUMBER_OF_FIELDS));
+//        this.mLinkToTeamSheet   = compData.getString(compData.getColumnIndex(CompetitieContract.CompetitionEntry.COL_COMP_LINK_TO_TEAM_SHEET));
+//        this.mLinkToGameSheet   = compData.getString(compData.getColumnIndex(CompetitieContract.CompetitionEntry.COL_COMP_LINK_TO_GAME_SHEET));
+//        this.mStartDateInMilli  = compData.getLong(compData.getColumnIndex(CompetitieContract.CompetitionEntry.COL_COMP_START_DATE));
+//        this.mEndDateInMilli    = compData.getLong(compData.getColumnIndex(CompetitieContract.CompetitionEntry.COL_COMP_END_DATE));
+//    }
 
     public String showTekst() {
         String verzamelText =
