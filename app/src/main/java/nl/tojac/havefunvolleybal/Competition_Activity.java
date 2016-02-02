@@ -3,10 +3,10 @@ package nl.tojac.havefunvolleybal;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 public class Competition_Activity extends AppCompatActivity implements CompetitionFragment.Callback {
 
@@ -24,8 +24,8 @@ public class Competition_Activity extends AppCompatActivity implements Competiti
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+                Toast.makeText(Competition_Activity.this, "Binnenkort mogelijk om een mail te sturen naar competitie leiding", Toast.LENGTH_SHORT).show();
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -34,11 +34,11 @@ public class Competition_Activity extends AppCompatActivity implements Competiti
 
 
 
-//        CompetitionFragment infoFragment = new CompetitionFragment();
-//
-//        getSupportFragmentManager().beginTransaction()
-//                .replace(R.id.competition_info_container, infoFragment, COMP_INFO_FRAGMENT_TAG)
-//                .commit();
+     CompetitionFragmentInfo infoFragment = new CompetitionFragmentInfo();
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.competition_info_container, infoFragment, COMP_INFO_FRAGMENT_TAG)
+                .commit();
 
         CompetitionFragment fragment = new CompetitionFragment();
 
@@ -46,6 +46,11 @@ public class Competition_Activity extends AppCompatActivity implements Competiti
                 .replace(R.id.competition_list_container, fragment, COMP_LIST_FRAGMENT_TAG)
                 .commit();
 
+    }
+
+    public void startReserveLijst(View view) {
+
+        Toast.makeText(Competition_Activity.this, "Binnenkort toegang tot de reservelijst", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -68,7 +73,7 @@ public class Competition_Activity extends AppCompatActivity implements Competiti
         } else {
 
 
-            Intent intent = new Intent(this, Games_Activity.class)
+            Intent intent = new Intent(this, Tabbed_Games.class)
                     .putExtra("COMP_ID", comp_ID);
             startActivity(intent);
 

@@ -15,7 +15,7 @@ import nl.tojac.havefunvolleybal.Utils;
 /**
  * Created by Tonnie on 30-12-2015.
  */
-public class FetchGameData {
+public class    FetchGameData {
 
 
     ContentResolver mResolver;
@@ -61,7 +61,16 @@ public class FetchGameData {
     }
 
 
+    public int RemoveResultData(String competitionID){
 
+        String[] mSelectionArgs = {competitionID};
+
+        String mSelection = CompetitieContract.ResultEntry.COL_RESULT_COMP_ID + " = ? ";
+
+        int rowsDeleted = mResolver.delete(CompetitieContract.ResultEntry.CONTENT_URI,mSelection , mSelectionArgs);
+
+        return rowsDeleted;
+    }
 
     private void processGameJson(JSONObject object, Context context) {
 
@@ -280,7 +289,7 @@ public class FetchGameData {
 
 
 
-                    Log.v("To1jac", wedstrijd.getSpeelTijd());
+
                     insertWedstrijdInDB(wedstrijd);
                     insertResultsInDB(resultTeam1);
                     insertResultsInDB(resultTeam2);
@@ -300,6 +309,7 @@ public class FetchGameData {
     private void insertResultsInDB(Result result) {
 
         ContentValues teamValues = new ContentValues();
+        teamValues.put(CompetitieContract.ResultEntry.COL_RESULT_COMP_ID, result.getCompetitionID());
         teamValues.put(CompetitieContract.ResultEntry.COL_RESULT_GAME_ID, result.getGameExtID());
         teamValues.put(CompetitieContract.ResultEntry.COL_RESULT_TEAM_ID, result.getTeamExtID());
         teamValues.put(CompetitieContract.ResultEntry.COL_RESULT_SET_1, result.getSet1Points());

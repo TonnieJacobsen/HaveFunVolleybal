@@ -32,14 +32,14 @@ public class CompetitieAdapter extends CursorAdapter {
         public final TextView  compNameView;
         public final TextView  compStartDate;
         public final TextView  compEndDate;
-        public final TextView  compStatus;
+//        public final TextView  compStatus;
 
         public ViewHolder(View view) {
             compIconView        = (ImageView) view.findViewById(R.id.li_comp_image);
             compNameView        = (TextView) view.findViewById(R.id.li_comp_name);
             compStartDate       = (TextView) view.findViewById(R.id.li_comp_start_date);
             compEndDate         = (TextView) view.findViewById(R.id.li_comp_end_date);
-            compStatus          = (TextView) view.findViewById(R.id.li_comp_status);
+//            compStatus          = (TextView) view.findViewById(R.id.li_comp_status);
         }
     }
 
@@ -99,7 +99,7 @@ public class CompetitieAdapter extends CursorAdapter {
         viewHolder.compEndDate.setText(Utils.getDateStringFromMilliseconds(dmilli, "dd-MM-yyyy"));
 
 
-        viewHolder.compStatus.setText(CompetitieContract.CompetitionEntry.COL_COMP_STATUS);
+
 
 
 

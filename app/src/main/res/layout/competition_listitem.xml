@@ -65,22 +65,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:paddingLeft="16dp">
 
-        <!-- Je kunt alleen maar commentaar zetten buiten de tags -->
-
-        <TextView
-            android:id="@+id/li_comp_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorAccent" />
-
-    </LinearLayout>
 
 
 </LinearLayout>

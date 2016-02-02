@@ -1,0 +1,282 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="nl.tojac.havefunvolleybal.GameDetailActivityFragment"
+    >
+
+
+
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <TextView
+                android:text="Datum:"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_column="1"
+                android:layout_weight="1"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/gd_tv_speeldatum"
+                android:text="19-01-2016"
+                android:layout_weight="2"
+                android:layout_column="2" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:text="Tijd:"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:layout_column="1" />
+            <TextView
+                android:id="@+id/gd_tv_speeltijd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="21:15"
+                android:layout_weight="2"
+                android:layout_column="2" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:text="Veld:"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:layout_column="1" />
+            <TextView
+                android:id="@+id/gd_tv_speelveld"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:layout_weight="2"
+                android:layout_column="2" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/gd_tv_team1"
+                android:text="Team 1"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:layout_column="1"
+                android:gravity="center"/>
+            <TextView
+                android:id="@+id/gd_tv_team2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Team 2"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_column="2"
+                android:visibility="visible"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+
+                android:text="Set 1:"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:layout_column="1"
+                android:gravity="left"/>
+            <TextView
+                android:id="@+id/gd_tv_set1_team1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:layout_column="2"
+                android:visibility="visible"/>
+
+            <TextView
+
+                android:text="Set 1:"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:layout_column="3"
+                android:gravity="left"/>
+            <TextView
+                android:id="@+id/gd_tv_set1_team2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:layout_column="4"
+                android:visibility="visible"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+
+                android:text="Set 2:"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:layout_column="1"
+                android:gravity="left"/>
+            <TextView
+                android:id="@+id/gd_tv_set2_team1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:layout_column="2"
+                android:visibility="visible"/>
+
+            <TextView
+
+                android:text="Set 2:"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:layout_column="3"
+                android:gravity="left"/>
+            <TextView
+                android:id="@+id/gd_tv_set2_team2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:layout_column="4"
+                android:visibility="visible"/>
+        </TableRow>
+
+
+        <TableRow>
+            <TextView
+
+                android:text="Set 3:"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:layout_column="1"
+                android:gravity="left"/>
+            <TextView
+                android:id="@+id/gd_tv_set3_team1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:layout_column="2"
+                android:visibility="visible"/>
+
+            <TextView
+
+                android:text="Set 3:"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:layout_column="3"
+                android:gravity="left"/>
+            <TextView
+                android:id="@+id/gd_tv_set3_team2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:layout_column="4"
+                android:visibility="visible"/>
+        </TableRow>
+
+
+        <TableRow>
+            <TextView
+
+                android:text="Set 4:"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:layout_column="1"
+                android:gravity="left"/>
+            <TextView
+                android:id="@+id/gd_tv_set4_team1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:layout_column="2"
+                android:visibility="visible"/>
+
+            <TextView
+
+                android:text="Set 4:"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:layout_column="3"
+                android:gravity="left"/>
+            <TextView
+                android:id="@+id/gd_tv_set4_team2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:layout_column="4"
+                android:visibility="visible"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+
+                android:text="Set 5:"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:layout_column="1"
+                android:gravity="left"/>
+            <TextView
+                android:id="@+id/gd_tv_set5_team1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:layout_column="2"
+                android:visibility="visible"/>
+
+            <TextView
+
+                android:text="Set 5:"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:layout_column="3"
+                android:gravity="left"/>
+            <TextView
+                android:id="@+id/gd_tv_set5_team2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:layout_column="4"
+                android:visibility="visible"/>
+        </TableRow>
+    </TableLayout>
+
+
+</RelativeLayout>

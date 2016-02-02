@@ -5,14 +5,18 @@
     android:paddingLeft="4dp"
     android:paddingRight="4dp">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:height="30dp"
-        android:text="Info scherm"/>
+
+
+
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/met_opzet400300"/>
+        android:id="@+id/reserverSpelersView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+
+        android:src="@mipmap/reserve_spelers"
+        android:onClick="startReserveLijst"/>
 
 </RelativeLayout>
