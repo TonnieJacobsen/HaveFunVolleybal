@@ -1,4 +1,4 @@
-package nl.tojac.havefunvolleybal.data;
+package nl.tojac.havefunvolleybal_2.data;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -9,7 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import nl.tojac.havefunvolleybal.Utils;
+import nl.tojac.havefunvolleybal_2.Utils;
 
 /**
  * Created by Tonnie on 2-1-2016.

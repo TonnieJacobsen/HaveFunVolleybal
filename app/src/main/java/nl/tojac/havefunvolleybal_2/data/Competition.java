@@ -1,10 +1,10 @@
-package nl.tojac.havefunvolleybal.data;
+package nl.tojac.havefunvolleybal_2.data;
 
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 
-import nl.tojac.havefunvolleybal.Utils;
+import nl.tojac.havefunvolleybal_2.Utils;
 
 /**
  * Created by kstanoev on 1/14/2015.

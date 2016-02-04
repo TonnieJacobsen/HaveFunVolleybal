@@ -1,6 +1,6 @@
-package nl.tojac.havefunvolleybal;
+package nl.tojac.havefunvolleybal_2;
 
-import nl.tojac.havefunvolleybal.data.Result;
+import nl.tojac.havefunvolleybal_2.data.Result;
 
 /**
  * Created by Tonnie on 24-12-2015.

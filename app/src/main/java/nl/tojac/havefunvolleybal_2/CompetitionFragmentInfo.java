@@ -1,4 +1,4 @@
-package nl.tojac.havefunvolleybal;
+package nl.tojac.havefunvolleybal_2;
 
 
 import android.os.Bundle;
@@ -11,19 +11,18 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MainFragmentInfo extends Fragment {
+public class CompetitionFragmentInfo extends Fragment {
 
 
-    public MainFragmentInfo() {
+    public CompetitionFragmentInfo() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main_fragment_info, container, false);
+        return inflater.inflate(R.layout.competition_info_fragment, container, false);
     }
 
 }

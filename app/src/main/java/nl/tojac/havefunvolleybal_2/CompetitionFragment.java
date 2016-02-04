@@ -1,4 +1,4 @@
-package nl.tojac.havefunvolleybal;
+package nl.tojac.havefunvolleybal_2;
 
 import android.database.Cursor;
 import android.net.Uri;
@@ -14,8 +14,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import nl.tojac.havefunvolleybal.data.CompetitieContract;
-import nl.tojac.havefunvolleybal.data.Competition;
+import nl.tojac.havefunvolleybal_2.data.CompetitieContract;
+import nl.tojac.havefunvolleybal_2.data.Competition;
 
 /**
  * A placeholder fragment containing a simple view.

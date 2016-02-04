@@ -1,4 +1,4 @@
-package nl.tojac.havefunvolleybal;
+package nl.tojac.havefunvolleybal_2;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import nl.tojac.havefunvolleybal.data.CompetitieContract;
+import nl.tojac.havefunvolleybal_2.data.CompetitieContract;
 
 /**
  * {@link CompetitieAdapter} exposes a list of competitions

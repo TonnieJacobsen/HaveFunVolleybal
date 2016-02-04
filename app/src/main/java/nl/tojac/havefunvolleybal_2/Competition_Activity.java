@@ -1,4 +1,4 @@
-package nl.tojac.havefunvolleybal;
+package nl.tojac.havefunvolleybal_2;
 
 import android.content.Intent;
 import android.os.Bundle;

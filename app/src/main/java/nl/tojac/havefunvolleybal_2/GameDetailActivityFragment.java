@@ -1,4 +1,4 @@
-package nl.tojac.havefunvolleybal;
+package nl.tojac.havefunvolleybal_2;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -11,9 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import nl.tojac.havefunvolleybal.data.CompetitieContract;
-import nl.tojac.havefunvolleybal.data.Wedstrijd;
+import nl.tojac.havefunvolleybal_2.data.CompetitieContract;
+import nl.tojac.havefunvolleybal_2.data.Wedstrijd;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -39,6 +40,7 @@ public class GameDetailActivityFragment extends Fragment implements LoaderManage
     private TextView mSet4Team2;
     private TextView mSet5Team2;
 
+    private int mGame_ID;
 
     private static final int GAME_DETAIL_LOADER = 0;
 
@@ -46,12 +48,12 @@ public class GameDetailActivityFragment extends Fragment implements LoaderManage
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-//        Bundle arguments = getArguments();
-//        if (arguments != null){
-//
-//            mUri = arguments.getParcelable(TeamDetailFragment.DETAIL_URI);
-//
-//        }
+        Bundle arguments = getArguments();
+        if (arguments != null){
+
+            mGame_ID = arguments.getInt("GAME_ID");
+//            Toast.makeText(getActivity(), String.valueOf(mGame_ID), Toast.LENGTH_SHORT).show();
+        }
 
         Log.v("To3jac", "onCreatview  ");
 
@@ -95,7 +97,7 @@ public class GameDetailActivityFragment extends Fragment implements LoaderManage
             String mSelection = "G1." + CompetitieContract.GameEntry._ID + " = ?";
 
             String[] mSelectionArgs = new String[1];
-            mSelectionArgs[0] = "3";
+            mSelectionArgs[0] = String.valueOf(mGame_ID);
 
             cursor.setUri(CompetitieContract.GameEntry.CONTENT_URI);
             cursor.setProjection(CompetitieContract.GameEntry.GAME_COLUMNS_WITH_TEAMS_AND_RESULTS);
@@ -126,17 +128,19 @@ public class GameDetailActivityFragment extends Fragment implements LoaderManage
             mSpeelVeldView.setText(wedstrijd.getSpeelVeld());
             mTeam1View.setText(wedstrijd.getTeamNaamTeam1());
             mTeam2View.setText(wedstrijd.getTeamNaamTeam2());
-            mSet1Team1.setText(wedstrijd.getTeam1Set1());
-            mSet2Team1.setText(wedstrijd.getTeam1Set2());
-            mSet3Team1.setText(wedstrijd.getTeam1Set3());
-            mSet4Team1.setText(wedstrijd.getTeam1Set4());
-            mSet5Team1.setText(wedstrijd.getTeam1Set5());
-            mSet1Team2.setText(wedstrijd.getTeam2Set1());
-            mSet2Team2.setText(wedstrijd.getTeam2Set2());
-            mSet3Team2.setText(wedstrijd.getTeam2Set3());
-            mSet4Team2.setText(wedstrijd.getTeam2Set4());
-            mSet5Team2.setText(wedstrijd.getTeam2Set5());
+            mSet1Team1.setText(String.valueOf(wedstrijd.getTeam1Set1()));
+            mSet2Team1.setText(String.valueOf(wedstrijd.getTeam1Set2()));
+            mSet3Team1.setText(String.valueOf(wedstrijd.getTeam1Set3()));
+            mSet4Team1.setText(String.valueOf(wedstrijd.getTeam1Set4()));
+            mSet5Team1.setText(String.valueOf(wedstrijd.getTeam1Set5()));
+            mSet1Team2.setText(String.valueOf(wedstrijd.getTeam2Set1()));
+            mSet2Team2.setText(String.valueOf(wedstrijd.getTeam2Set2()));
+            mSet3Team2.setText(String.valueOf(wedstrijd.getTeam2Set3()));
+            mSet4Team2.setText(String.valueOf(wedstrijd.getTeam2Set4()));
+            mSet5Team2.setText(String.valueOf(wedstrijd.getTeam2Set5()));
 
+        }else {
+            Toast.makeText(getActivity(), "Er is geen data geselecteerd", Toast.LENGTH_SHORT).show();
         }
     }
 
