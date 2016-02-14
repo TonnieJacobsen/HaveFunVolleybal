@@ -48,14 +48,19 @@ public class GameDetailActivityFragment extends Fragment implements LoaderManage
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
+
         Bundle arguments = getArguments();
         if (arguments != null){
 
             mGame_ID = arguments.getInt("GAME_ID");
-//            Toast.makeText(getActivity(), String.valueOf(mGame_ID), Toast.LENGTH_SHORT).show();
+
+        }else
+        {
+            Toast.makeText(getActivity(), "Geen argumenten ", Toast.LENGTH_SHORT).show();
         }
 
-        Log.v("To3jac", "onCreatview  ");
+
 
         View rootView = inflater.inflate(R.layout.fragment_game_detail, container, false);
 
@@ -122,6 +127,8 @@ public class GameDetailActivityFragment extends Fragment implements LoaderManage
         if (data != null && data.moveToFirst()) {
 
             Wedstrijd wedstrijd = new Wedstrijd(data);
+
+            Log.v("To3jac", wedstrijd.showTekst());
 
             mSpeelDatumView.setText(wedstrijd.getSpeelDatum());
             mSpeelTijdView.setText(wedstrijd.getSpeelTijd());

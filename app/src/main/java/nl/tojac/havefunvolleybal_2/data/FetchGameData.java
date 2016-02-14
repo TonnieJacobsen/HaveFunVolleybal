@@ -147,7 +147,7 @@ public class    FetchGameData {
                     }
 
                     if (!columns.isNull(2)) {
-                        speelVeld = columns.getJSONObject(2).getString("v");
+                        speelVeld = columns.getJSONObject(2).getString("f");
                     }
                     if (!columns.isNull(3)) {
                         poule = columns.getJSONObject(3).getString("v");
@@ -351,6 +351,7 @@ public class    FetchGameData {
         gameValues.put(CompetitieContract.GameEntry.COL_GAME_ID_ORG_PLAYF, wedstrijd.getTeamNetOpID().trim());
         gameValues.put(CompetitieContract.GameEntry.COL_GAME_ID_POULE, 400);
         gameValues.put(CompetitieContract.GameEntry.COL_GAME_POULE, wedstrijd.getPoule());
+        gameValues.put(CompetitieContract.GameEntry.COL_GAME_PLAYFIELD, wedstrijd.getSpeelVeld());
 
         mResolver.insert(CompetitieContract.GameEntry.CONTENT_URI, gameValues);
 

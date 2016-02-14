@@ -73,8 +73,10 @@ public class Competition_Activity extends AppCompatActivity implements Competiti
         } else {
 
 
+
             Intent intent = new Intent(this, Tabbed_Games.class)
                     .putExtra("COMP_ID", comp_ID);
+
             startActivity(intent);
 
 //          Toast.makeText(this, String.valueOf(comp_ID), Toast.LENGTH_SHORT).show();

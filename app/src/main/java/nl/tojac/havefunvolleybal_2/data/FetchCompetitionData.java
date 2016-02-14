@@ -3,6 +3,7 @@ package nl.tojac.havefunvolleybal_2.data;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -23,12 +24,12 @@ public class FetchCompetitionData {
     ContentResolver mResolver;
     int log;
 
-    public FetchCompetitionData(final Context context, String competitioId) {
+    public FetchCompetitionData(final Context context) {
 
         log = LOG_ON;
         mResolver = context.getContentResolver();
 
-        mResolver.delete(CompetitieContract.CompetitionEntry.CONTENT_URI, null, null);
+//        mResolver.delete(CompetitieContract.CompetitionEntry.CONTENT_URI, null, null);
 
 
         String query = Queries.selectCompetitions;
@@ -72,6 +73,7 @@ public class FetchCompetitionData {
             int colNumber;
             String colInDb;
 
+
             for (int r = 0; r < rows.length(); ++r) {
 
 
@@ -104,6 +106,10 @@ public class FetchCompetitionData {
                 } else {
                     CompetitionValues.put(colInDb, "");
                 }
+
+
+
+
 
                 colNumber ++ ;
                 colInDb = CompetitieContract.CompetitionEntry.COL_COMP_STATUS;
@@ -306,8 +312,35 @@ public class FetchCompetitionData {
                 }
 
 
+                String  mSelection = CompetitieContract.CompetitionEntry.COL_COMP_EXT_COMP_ID + " = ?";
+
+                String[]  mSelectionArgs = new String[1];
+                mSelectionArgs[0] = CompetitionValues.getAsString(CompetitieContract.CompetitionEntry.COL_COMP_EXT_COMP_ID);
+
+                Log.v("To1jac", CompetitionValues.getAsString(CompetitieContract.CompetitionEntry.COL_COMP_EXT_COMP_ID));
+
+
+
+
+                Cursor compData = mResolver.query(
+                        CompetitieContract.CompetitionEntry.CONTENT_URI,
+                        null,
+                        mSelection,
+                        mSelectionArgs,
+                        null);
+
+                if (compData.getCount() > 0){
+
+
+                    Log.v("To1jac", "Record gevonden, zal ik het record updaten?  ");
+
+                }else {
+
 
                     mResolver.insert(CompetitieContract.CompetitionEntry.CONTENT_URI, CompetitionValues);
+
+                }
+
 
 
             }
